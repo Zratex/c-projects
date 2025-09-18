@@ -22,6 +22,7 @@ int isPrime(int x) {
 
 int main()
 {
+    printf("Exo 5 : Calcul décomposition nombres premiers\n");
     int number;
     printf("Entrez un nombre : ");
     scanf("%d", &number);
