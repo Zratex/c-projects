@@ -8,7 +8,6 @@ int main()
     printf("Entrez un mot palindrome : ");
     scanf("%s", mot);
     int result = 1;
-    int endWhile = 0;
     int i = 0;
     while (i < (strlen(mot))/2 && result != 0) {
         if (mot[i] != mot[strlen(mot)-1-i]) {
