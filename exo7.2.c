@@ -3,6 +3,7 @@
 
 int main()
 {
+    //En fait le plus opti était de parcourir de droite à gauche
     printf("Exo 7 : Triangle pascal par tableau 1D\n");
     int n;
     printf("Entrez le nombre d'interration pour le triangle : ");
