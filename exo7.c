@@ -4,9 +4,10 @@ int main()
 {
     printf("Exo 7 : Triangle pascal par matrice\n");
     int n;
-    printf("Entrez le nombre d'interation pour le triangle : ");
+    printf("Entrez le nombre d'interration pour le triangle : ");
     scanf("%d",&n);
     int matrix[n][n];
+    // Calcul du triangle :
     for (int i = 0; i<n; i++) {
         matrix[i][0] = 1;
         matrix[i][i] = 1;
@@ -17,6 +18,7 @@ int main()
             }
         }
     }
+    // Affichage du triangle :
     for (int i = 0; i<n; i++) {
         for (int j = 0; j<=i; j++) {
             printf("%d ",matrix[i][j]);

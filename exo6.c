@@ -14,6 +14,7 @@ int isYearBissextile(int year) {
 
 int main()
 {
+    // Autre solution : demander une date correcte, et faire un atoi(&date[0]) pour obtenir le jour, atoi(&date[3]) pour le mois et atoi(&date[6]) pour l'année
     printf("Exo 6 : Date lendemain\n");
     int day, month, year;
     printf("\nEntrez le jour (numériquement) : ");
