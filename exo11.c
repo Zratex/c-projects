@@ -5,8 +5,7 @@ int fibonacci(int entier) {
     if (entier <=2) {
         return 1;
     } else {
-        int temp = fibonacci(entier-1) + fibonacci(entier-2);
-        return temp;
+        return fibonacci(entier-1) + fibonacci(entier-2);
     }
 }
 
