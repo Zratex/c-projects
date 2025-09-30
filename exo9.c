@@ -1,28 +1,21 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 int main() {
     printf("Exo 9 : Duplication caractères\n");
     char string[256];
     printf("Entrez une chaîne de caractères avec des chiffres : ");
     scanf("%s", &string);
-    //Duplication des caractères :
-    char* result[sizeof(string)/sizeof(char)];
-    for (int i=0;i<sizeof(string)/sizeof(char);i++) {
-        int number=atoi(&string[i]);
-        if (number!=0) {
-            char characters[number];
-            for (int j=0;j<number;j++) {
-                characters[j] = string[i+1];
+
+    for (int i = 0; i < strlen(string); i++) {
+        if (string[i] >= '0' && string[i] <= '9') {
+            int number = string[i] - '0';
+            char c = string[i+1];
+            for (int j = 0; j < number; j++) {
+                printf("%c", c);
             }
-            result[i] = characters;
-            i++;
-        }
-    }
-    //Affichage :
-    for (int i=0;i<sizeof(result)/sizeof(char*);i++) {
-        for (int j=0;i<sizeof(result[i])/sizeof(char);j++) {
-            printf("%c",result[i][j]);
+            i++; // sauter le caractère déjà traité
         }
     }
 
