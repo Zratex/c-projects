@@ -88,8 +88,12 @@ int main() {
     printf("Exo 12 : Tours d'Hanoi\n");
     //H(3,1,3);
     int entier;
-    printf("Entrez la taille de la tour d'Hanoi : ");
+    printf("Entrez la taille de la tour d'Hanoi (si possible impair) : ");
     scanf("%d", &entier);
+    if (entier%2 == 0) {
+        entier--;
+        printf("Pour que l'affichage soit plus clair, la tour fera %d\n",entier);
+    }
     hanoi_init(entier);
 
     return 1;
