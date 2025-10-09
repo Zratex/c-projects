@@ -27,6 +27,11 @@ class Fraction
         float result() {
             return dividende/diviseur;
         }
+        Fraction operator+(Fraction &f) {
+            simplification();
+            f.simplification();
+            return Fraction(dividende+f.dividende,diviseur+f.diviseur);
+        }
     private:
         float pgcd() {
             int mini = dividende;
@@ -58,4 +63,7 @@ int main() {
     cout << f1.display() << endl;
     f1.simplification();
     cout << "Après simplification : " << f1.display() << " = " << f1.result() << endl;
+    Fraction f2(6.0f,2.0f);
+    Fraction fResult = f1+f2;
+    cout << f1.display() << " + " << f2.display() << " = " << fResult.display() << endl;
 }
