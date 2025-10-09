@@ -34,23 +34,24 @@ class Fraction
             this->setDividende(this->getDividende()/pgcdValue);
             this->setDiviseur(this->getDiviseur()/pgcdValue);
         }
+        void multiSimplification(Fraction &f) {
+            this->simplification();
+            f.simplification();
+        }
         float result() {
             return this->getDividende()/this->diviseur;
         }
         Fraction operator+(Fraction &f) {
-            simplification();
-            f.simplification();
-            return Fraction(this->getDividende()+f.getDividende(),this->getDiviseur()+f.getDiviseur());
+            this->multiSimplification(f);
+            return Fraction(this->getDividende()*f.getDiviseur()+f.getDividende()*this->getDiviseur(),this->getDiviseur()*f.getDiviseur());
         }
         Fraction operator-(Fraction &f) {
-            this->simplification();
-            f.simplification();
-            float pgcdValue = pgcd(this->getDividende(),f.getDiviseur());
-            this->setDiviseur(pgcdValue);
-            f.setDiviseur(pgcdValue);
-            this->simplification();
-            f.simplification();
-            return Fraction(this->getDividende()-f.getDividende(),this->getDiviseur());
+            this->multiSimplification(f);
+            return Fraction(this->getDividende()*f.getDiviseur()-f.getDividende()*this->getDiviseur(),this->getDiviseur()*f.getDiviseur());
+        }
+        Fraction operator*(Fraction &f) {
+            this->multiSimplification(f);
+            return Fraction(this->getDividende()*f.getDiviseur()*f.getDividende()*this->getDiviseur(),this->getDiviseur()*f.getDiviseur());
         }
     private:
         float dividende;
@@ -90,4 +91,6 @@ int main() {
     cout << f1.display() << " + " << f2.display() << " = " << fResult.display() << endl;
     fResult = f1-f2;
     cout << f1.display() << " - " << f2.display() << " = " << fResult.display() << endl;
+    fResult = f1*f2;
+    cout << f1.display() << " * " << f2.display() << " = " << fResult.display() << endl;
 }
