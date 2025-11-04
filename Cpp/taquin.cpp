@@ -18,6 +18,14 @@ class Taquin
             }
             this->shuffle(1000);
         }
+        Taquin(Taquin& t) {
+            this->setVoidCellCoord(t.getVoidCellCoord()[0],t.getVoidCellCoord()[1]);
+            for (int i=0; i<4;i++) {
+                for (int j=0; j<4;j++) {
+                    this->setCell(i,j,t.getCell(i,j));
+                }
+            }
+        }
         int* getVoidCellCoord() {
             return this->voidCellCoord;
         }
@@ -84,6 +92,8 @@ int main() {
     printf("Exo 2 : Taquin\n");
     Taquin t;
     t.display();
+    Taquin t1 = t;
+    t1.display();
 
     return 0;
 }
