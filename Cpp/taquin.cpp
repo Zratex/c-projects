@@ -36,22 +36,22 @@ class Taquin
         void setCell(int x,int y,int value) {
             this->cells[x][y] = value;
         }
-        int getCell(int x, int y) {
+        int getCell(int x, int y) const {
             return this->cells[x][y];
         }
         void moveCell(int initX, int initY, int destinationX, int destinationY) {
-            if (this->isMovePossible(initX, initY, destinationX, destinationY)) {
+            if (this->isMovePossible(destinationX, destinationY)) {
                 int temp = this->getCell(destinationX,destinationY);
                 this->setCell(destinationX, destinationY, this->getCell(initX,initY));
                 this->setCell(initX,initY,temp);
             }
         }
-        bool isMovePossible(int initX, int initY, int destinationX, int destinationY) {
+        bool isMovePossible(int destinationX, int destinationY) {
             if (destinationX == destinationY && destinationX == 3) {
                 return false;
             }
-            if (this->getCell(initX,initY) == 0) {
-                return (initX-1 == destinationX && initY == destinationY) || (initX+1 == destinationX && initY == destinationY) || (initY-1 == destinationY && initX == destinationX) || (initY+1 == destinationY && initX == destinationX);
+            if (this->getCell(this->getVoidCellCoord()[0],this->getVoidCellCoord()[1]) == 0) {
+                return (this->getVoidCellCoord()[0]-1 == destinationX && this->getVoidCellCoord()[1] == destinationY) || (this->getVoidCellCoord()[0]+1 == destinationX && this->getVoidCellCoord()[1] == destinationY) || (this->getVoidCellCoord()[1]-1 == destinationY && this->getVoidCellCoord()[0] == destinationX) || (this->getVoidCellCoord()[1]+1 == destinationY && this->getVoidCellCoord()[0] == destinationX);
             } else {
                 return false;
             }
@@ -79,7 +79,7 @@ class Taquin
         void shuffle(int repetitions) {
             while (repetitions > 0) {
                 int nextPosition[2] = {rand()%4,rand()%4};
-                if (isMovePossible(this->getVoidCellCoord()[0],this->getVoidCellCoord()[1],nextPosition[0],nextPosition[1])) {
+                if (isMovePossible(nextPosition[0],nextPosition[1])) {
                     this->moveCell(this->getVoidCellCoord()[0],this->getVoidCellCoord()[1],nextPosition[0],nextPosition[1]);
                     this->setVoidCellCoord(nextPosition[0],nextPosition[1]);
                 }
@@ -99,6 +99,47 @@ class Taquin
                 }
             }
             return result;
+        }
+
+        bool isGameFinished() {
+            return this->amountCorrectCells() >= 15;
+        }
+
+        bool move(int direction) {
+            switch(direction) {
+            case 0: //Gauche
+                if (this->getVoidCellCoord()[1] != 0) {
+                    moveCell(this->getVoidCellCoord()[0],this->getVoidCellCoord()[1],this->getVoidCellCoord()[0],this->getVoidCellCoord()[1]-1);
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            case 1: //Haut
+                if (this->getVoidCellCoord()[0] != 0) {
+                    moveCell(this->getVoidCellCoord()[0],this->getVoidCellCoord()[1],this->getVoidCellCoord()[0]-1,this->getVoidCellCoord()[1]);
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            case 2: //Droite
+                if (this->getVoidCellCoord()[1] != 3) {
+                    moveCell(this->getVoidCellCoord()[0],this->getVoidCellCoord()[1],this->getVoidCellCoord()[0],this->getVoidCellCoord()[1]+1);
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            case 3: //Bas
+                if (this->getVoidCellCoord()[0] != 3) {
+                    moveCell(this->getVoidCellCoord()[0],this->getVoidCellCoord()[1],this->getVoidCellCoord()[0]+1,this->getVoidCellCoord()[1]);
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            }
         }
 };
 
