@@ -86,6 +86,20 @@ class Taquin
                 repetitions -= 1;
             }
         }
+
+        int amountCorrectCells() {
+            int compteur = 0;
+            int result = 0;
+            for (int i=0;i<4;i++) {
+                for (int j=0;j<4;j++) {
+                    if (this->getCell(i,j) == compteur) {
+                        result += 1;
+                    }
+                    compteur +=1;
+                }
+            }
+            return result;
+        }
 };
 
 int main() {
@@ -94,6 +108,7 @@ int main() {
     t.display();
     Taquin t1 = t;
     t1.display();
+    cout << "Nombre de cellules correctes : " << t1.amountCorrectCells() << endl;
 
     return 0;
 }
