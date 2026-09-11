@@ -58,12 +58,12 @@ int main()
     int day, month, year;
     printf("\nEntrez le JOUR d'aujourd'hui (numériquement) : ");
     scanf("%d", &day);
-    printf("\nEntrez le MOIS d'aujourd'hui (numériquement, en excluant 0 exclus) : ");
+    printf("\nEntrez le MOIS d'aujourd'hui (numériquement) : ");
     scanf("%d", &month);
     printf("\nEntrez l'ANNEE d'aujourd'hui (numériquement) : ");
     scanf("%d", &year);
     int nJours = 0;
-    printf("\nEntrez le NOMBRE DE JOURS APRES la date que vous avez indiqué (numériquement, négatif supportés) : ");
+    printf("\nEntrez le NOMBRE DE JOURS APRES la date que vous avez indiqué (numériquement) : ");
     scanf("%d", &nJours);
     printf("Date d'aujourd'hui : %d/%d/%d\n",day,month,year);
     //testIfTodayYearIsBisextile(year);
