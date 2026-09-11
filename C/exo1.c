@@ -22,5 +22,5 @@ int main()
         }
     }
     printf("Plus grand diviseur commun est : %d",result);
-    return 1;
+    return 0;
 }

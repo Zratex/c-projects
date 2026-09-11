@@ -31,5 +31,5 @@ int main()
     } else {
         printf("Ce n'est PAS un palindrome");
     }
-    return 1;
+    return 0;
 }

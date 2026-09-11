@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int PGCD(int n1, int n2) {
     int min = n2;
@@ -16,16 +17,21 @@ int PGCD(int n1, int n2) {
     return result;
 }
 
+void getFacteurs(int n) {
+    int result[n];
+    for (int i=0; i<n; i++) {
+        if (i!=0 && n%i==0 && PGCD(i,i)==1) {
+            printf("%d\n",i);
+        }
+    }
+}
+
 int main()
 {
-    printf("Exo 2 : Simplification Fraction\n");
-    int denom,div;
-    printf("Entrez le denominateur : ");
-    scanf("%d",&denom);
-    printf("Entrez le diviseur : ");
-    scanf("%d",&div);
-
-    int comm=PGCD(denom,div);
-    printf("%d/%d = %d/%d",denom,div,denom/comm,div/comm);
+    printf("Exo 5 : Facteurs premiers\n");
+    printf("Choisissez un nombre : ");
+    int n;
+    scanf("%d",&n);
+    getFacteurs(n);
     return 0;
 }

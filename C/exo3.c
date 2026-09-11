@@ -26,5 +26,5 @@ int main()
         tab[i]=i*i;
     }
     printf("Le plus petit du tableau : %d\nLe plus grand du tableau : %d",findMin(tab),findMax(tab));
-    return 1;
+    return 0;
 }
