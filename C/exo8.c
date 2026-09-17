@@ -19,7 +19,7 @@ int main()
     }
     printf("]\n");
     //Affichage de l'histogramme :
-    int findMax(int tab[],int len) {
+    int findMax(int tab[],int len) { //On cherche d'abord
         int max = tab[0];
         for (int i=0;i<len;i++) {
             //printf("Current max : %d ; tab[i] : %d\n",max,tab[i]);
