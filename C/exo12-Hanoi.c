@@ -22,7 +22,7 @@ void printHanoi(int** towers, int n) {
     for (int j=0;j<n;j++) {
         for (int i=0;i<3;i++) {
             int length=towers[i][j];
-            for (int x=0;x<((n-length)/2);x++) { //Vide à afficher AVANT le disque de la la tour :
+            for (int x=0;x<(((n-1)-length)/2);x++) { //Vide à afficher AVANT le disque de la la tour :
                 printf(" ");
             }
             if (length!=0) {
@@ -31,15 +31,15 @@ void printHanoi(int** towers, int n) {
                 }
                 for (int x=0;x<length;x++) { //On affiche le cercle de la tour :
                     if (length%2==0) {
-                        printf("-");
+                        printf("-"); //Pair
                     } else {
-                        printf("=");
+                        printf("="); //Impair
                     }
                 }
             } else {
                 printf("|");
             }
-            for (int x=0;x<((n-length)/2);x++) { //Vide à afficher APRES le disque de la tour :
+            for (int x=0;x<(((n-1)-length)/2);x++) { //Vide à afficher APRES le disque de la tour :
                 printf(" ");
             }
             //Changement de tour :
@@ -49,6 +49,7 @@ void printHanoi(int** towers, int n) {
     }
 }
 
+/*
 int getIndexFromChar(char t) {
     if (t=='a') {
         return 0;
@@ -72,6 +73,7 @@ void updateTowersToMove(char t[2]) {
     }
 }
 
+
 int ifHanoiResolved(int** towers, int n) {
     for (int i=0;i<n;i++) {
         if (towers[2][i]!=i) { //ça veut dire que la tour n'est pas complète
@@ -80,8 +82,10 @@ int ifHanoiResolved(int** towers, int n) {
     }
     return 1;
 }
+*/
 
 int getTopCircleIndexFromSingularTower(int* tower,int n) {
+    //Retourne le cercle le plus haut d'UNE tour (int* tower)
     for (int i=0;i<n;i++) {
         if (tower[i]!=0) { //On a trouvé le premier élément qui n'est pas vide
             return i;
@@ -91,11 +95,12 @@ int getTopCircleIndexFromSingularTower(int* tower,int n) {
 }
 
 void moveCircles(int** towers,int indexA,int indexB, int n) {
+    //Execute le déplacement d'un cercle vers un autre emplacement, à partir de son index
     int tempIndex = getTopCircleIndexFromSingularTower(towers[indexA],n);
     towers[indexB][getTopCircleIndexFromSingularTower(towers[indexB],n)-1]=towers[indexA][tempIndex];
     towers[indexA][tempIndex]=0;
 }
-
+/*
 void round(int**towers,char towersToMove[2], int n) {
     moveCircles(towers,getIndexFromChar(towersToMove[0]),getIndexFromChar(towersToMove[1]),n);
     printHanoi(towers,n);
@@ -118,13 +123,32 @@ void resolutionHanoi(int** towers, int n) {
         compteur++;
     }
 }
+*/
+
+void moveCirclesFromTowerToTower(int nbCircles, int originTowerIndex, int destinationTowerIndex, int** towers, int n) {
+    //Déplace des cercles (nbCircles) d'une tour (originTowerIndex) vers une autre (destinationTowerIndex)
+    printf("nbCircles à bouger : %d\n",nbCircles);
+    printHanoi(towers,n);
+    if (nbCircles == 1) { //On est arrivé au bout de la factorielle, donc on déplace le cercle :
+        moveCircles(towers,originTowerIndex,destinationTowerIndex,n);
+    } else {
+        moveCirclesFromTowerToTower(1,originTowerIndex,(originTowerIndex+2)%3,towers,n); //A->C ; B->A
+        moveCirclesFromTowerToTower(1,originTowerIndex,(originTowerIndex+1)%3,towers,n); //A->B ; B->C
+        moveCirclesFromTowerToTower(1,(originTowerIndex+2)%3,(originTowerIndex+1)%3,towers,n); //C->B ; A->C
+        moveCirclesFromTowerToTower(1,originTowerIndex,(originTowerIndex+2)%3,towers,n); //A->C ; B->A
+        moveCirclesFromTowerToTower(nbCircles-1,(originTowerIndex+1)%3,(originTowerIndex+2)%3,towers,n); //n-1, B->C ; C->A
+    }
+}
 
 int main() {
     printf("Exo 12 : Tours de Hanoi\n");
     int n;
     printf("Entrez un nombre pour définir la taille de la tour de Hanoi : ");
     scanf("%d", &n);
+    if (n%2==1) {
+        n++;
+    }
     int** towers = initTowers(n);
     printHanoi(towers,n);
-    resolutionHanoi(towers,n);
+    moveCirclesFromTowerToTower(n-1,0,2,towers,n);
 }
