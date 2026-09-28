@@ -127,16 +127,15 @@ void resolutionHanoi(int** towers, int n) {
 
 void moveCirclesFromTowerToTower(int nbCircles, int originTowerIndex, int destinationTowerIndex, int** towers, int n) {
     //Déplace des cercles (nbCircles) d'une tour (originTowerIndex) vers une autre (destinationTowerIndex)
-    printf("nbCircles à bouger : %d\n",nbCircles);
-    printHanoi(towers,n);
     if (nbCircles == 1) { //On est arrivé au bout de la factorielle, donc on déplace le cercle :
         moveCircles(towers,originTowerIndex,destinationTowerIndex,n);
+        printHanoi(towers,n);
     } else {
-        moveCirclesFromTowerToTower(1,originTowerIndex,(originTowerIndex+2)%3,towers,n); //A->C ; B->A
-        moveCirclesFromTowerToTower(1,originTowerIndex,(originTowerIndex+1)%3,towers,n); //A->B ; B->C
-        moveCirclesFromTowerToTower(1,(originTowerIndex+2)%3,(originTowerIndex+1)%3,towers,n); //C->B ; A->C
-        moveCirclesFromTowerToTower(1,originTowerIndex,(originTowerIndex+2)%3,towers,n); //A->C ; B->A
-        moveCirclesFromTowerToTower(nbCircles-1,(originTowerIndex+1)%3,(originTowerIndex+2)%3,towers,n); //n-1, B->C ; C->A
+        //Soustraction sur 3 car on peut obtenir des nombres négatifs, et qu'il n'y a pas de fonction abs() par défaut
+        //On doit faire cette formule pour prendre en compte la transposition pour les cas où A=B et A=C
+        moveCirclesFromTowerToTower(nbCircles-1,originTowerIndex,3-originTowerIndex-destinationTowerIndex,towers,n); //A->B
+        moveCirclesFromTowerToTower(1,originTowerIndex,destinationTowerIndex,towers,n); //A->C
+        moveCirclesFromTowerToTower(nbCircles-1,3-originTowerIndex-destinationTowerIndex,destinationTowerIndex,towers,n); //B->C
     }
 }
 
