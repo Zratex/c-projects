@@ -49,41 +49,6 @@ void printHanoi(int** towers, int n) {
     }
 }
 
-/*
-int getIndexFromChar(char t) {
-    if (t=='a') {
-        return 0;
-    } else if (t=='b') {
-        return 1;
-    } else if (t=='c') {
-        return 2;
-    }
-}
-
-void updateTowersToMove(char t[2]) {
-    if (t[0]=='a' && t[1]=='b') {
-        t[0]='b';
-        t[1]='c';
-    } else if (t[0]=='b' && t[1]=='c') {
-        t[0]='c';
-        t[1]='a';
-    } else if (t[0]=='c' && t[1]=='a') {
-        t[0]='a';
-        t[1]='b';
-    }
-}
-
-
-int ifHanoiResolved(int** towers, int n) {
-    for (int i=0;i<n;i++) {
-        if (towers[2][i]!=i) { //ça veut dire que la tour n'est pas complète
-            return 0;
-        }
-    }
-    return 1;
-}
-*/
-
 int getTopCircleIndexFromSingularTower(int* tower,int n) {
     //Retourne le cercle le plus haut d'UNE tour (int* tower)
     for (int i=0;i<n;i++) {
@@ -100,35 +65,16 @@ void moveCircles(int** towers,int indexA,int indexB, int n) {
     towers[indexB][getTopCircleIndexFromSingularTower(towers[indexB],n)-1]=towers[indexA][tempIndex];
     towers[indexA][tempIndex]=0;
 }
-/*
-void round(int**towers,char towersToMove[2], int n) {
-    moveCircles(towers,getIndexFromChar(towersToMove[0]),getIndexFromChar(towersToMove[1]),n);
-    printHanoi(towers,n);
-    updateTowersToMove(towersToMove);
-    updateTowersToMove(towersToMove);
-    moveCircles(towers,getIndexFromChar(towersToMove[0]),getIndexFromChar(towersToMove[1]),n);
-    printHanoi(towers,n);
-    updateTowersToMove(towersToMove);
-    moveCircles(towers,getIndexFromChar(towersToMove[0]),getIndexFromChar(towersToMove[1]),n);
-    printHanoi(towers,n);
-}
-
-void resolutionHanoi(int** towers, int n) {
-    char towersToMove[2]={'c','a'}; //J'ai appris après coup que je peux juste faire un "enum towersToMove{A,B,C};" plutôt que ça et les fonctions que j'ai codé avec
-    int compteur = 0;
-    while (ifHanoiResolved(towers,n)==0 && compteur < 5) { //La condition n'est pas bonne
-        updateTowersToMove(towersToMove);
-        round(towers,towersToMove,n);
-
-        compteur++;
-    }
-}
-*/
 
 void moveCirclesFromTowerToTower(int nbCircles, int originTowerIndex, int destinationTowerIndex, int** towers, int n) {
     //Déplace des cercles (nbCircles) d'une tour (originTowerIndex) vers une autre (destinationTowerIndex)
     if (nbCircles == 1) { //On est arrivé au bout de la factorielle, donc on déplace le cercle :
         moveCircles(towers,originTowerIndex,destinationTowerIndex,n);
+        //Affichage de la tour à jour :
+        for (int i=0;i<n*3;i++) {
+            printf("-");
+        }
+        printf("\n");
         printHanoi(towers,n);
     } else {
         //Soustraction sur 3 car on peut obtenir des nombres négatifs, et qu'il n'y a pas de fonction abs() par défaut
@@ -144,7 +90,7 @@ int main() {
     int n;
     printf("Entrez un nombre pour définir la taille de la tour de Hanoi : ");
     scanf("%d", &n);
-    if (n%2==1) {
+    if (n%2==1) { //Euh c'est trop relou les nombres impairs pour l'affichage, flemme hein
         n++;
     }
     int** towers = initTowers(n);
